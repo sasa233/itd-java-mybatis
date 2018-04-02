@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <!-- 指定使用的连接池的配置 -->
+  <environments default="development">
+  	<!-- 连接数据库的相关配置 -->
+    <environment id="development">
+      <!-- 默认采用JDBC事务管理，在mybatis中事务是手动提交的(默认开启，手动提交) -->
+      <transactionManager type="JDBC"/>
+      <!-- 配置数据库连接池 -->
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/myshop?characterEncoding=utf8&amp;useSSL=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <!-- 映射文件，此文件以后会写入sql代码 -->
+  <mappers>
+    <mapper resource="cn/yd/shop/model/product.xml" />
+  </mappers>
+  
+</configuration>
