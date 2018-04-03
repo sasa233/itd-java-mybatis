@@ -1,7 +1,10 @@
 package cn.yd.shop.dao.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -18,14 +21,15 @@ public class ProductDaoImpl {
 		Product product = new Product();
 		ProductDaoImpl daoImpl = new ProductDaoImpl();
 		product.setName("test");
-//		daoImpl.save(product);
-//		product.setPrice(new BigDecimal(3.14));
-//		product.setId(4);
+		product.setDate(new Date());
+		product.setPrice(new BigDecimal(66.9));
+		daoImpl.save(product);
+//		product.setId(8);
 //		daoImpl.update(product);
 //		daoImpl.delete(4);
-		for (Product temp : daoImpl.queryByName("")) {
-			System.out.println(temp);
-		}
+//		for (Product temp : daoImpl.queryByName1("", 3.0, 100.0)) {
+//			System.out.println(temp);
+//		}
 	}
 
 	public void save(Product product) {
@@ -66,6 +70,20 @@ public class ProductDaoImpl {
 		// Product.xml
 		SqlSession session = JdbcUtils.getSqlSession();
 		List<Product> proList = session.selectList(Product.class.getName() + ".queryByName", "%" + keyword + "%");
+		JdbcUtils.close(session);
+		return proList;
+	}
+	
+	public List<Product> queryByName1(String keyword, Double minPrice, Double maxPrice) {
+		// 1: 获取sqlSession --> sessionFactory --> mybatis-cfg.xml --->
+		// Product.xml
+		
+		Map<String, Object> paraMap = new HashMap<String, Object>();
+		paraMap.put("keyword", "%" + keyword + "%");
+		if (minPrice!=null) paraMap.put("minPrice", minPrice);
+		if (maxPrice!=null) paraMap.put("maxPrice", maxPrice);
+		SqlSession session = JdbcUtils.getSqlSession();
+		List<Product> proList = session.selectList(Product.class.getName() + ".queryByName1", paraMap);
 		JdbcUtils.close(session);
 		return proList;
 	}
