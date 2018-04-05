@@ -60,7 +60,7 @@ public class ProductDaoImpl {
 		// 1: 获取sqlSession --> sessionFactory --> mybatis-cfg.xml --->
 		// Product.xml
 		SqlSession session = JdbcUtils.getSqlSession();
-		session.insert(Product.class.getName() + ".delete", id);
+		session.insert("cn.yd.shop.model.Product.delete", id);
 		session.commit();
 		JdbcUtils.close(session);
 	}
